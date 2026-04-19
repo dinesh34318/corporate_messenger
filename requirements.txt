@@ -1,4 +1,5 @@
-streamlit
+fastapi
+uvicorn
 pymongo[srv]
 python-dotenv
 bcrypt
