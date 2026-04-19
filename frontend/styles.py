@@ -222,39 +222,39 @@ def inject_css():
     # Theme-specific CSS overrides
     theme_css = ""
     if theme == "light":
-        theme_css = """
-        :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --bg-card: #e9ecef;
-            --bg-hover: #dee2e6;
-            --accent: #0066cc;
-            --accent-light: #3399ff;
-            --accent-dim: rgba(0, 102, 204, 0.1);
-            --text-primary: #212529;
-            --text-secondary: #6c757d;
-            --text-muted: #adb5bd;
-            --border: #dee2e6;
-            --border-light: #e9ecef;
-        }
-        """
+        theme_css = """<style>
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-card: #e9ecef;
+    --bg-hover: #dee2e6;
+    --accent: #0066cc;
+    --accent-light: #3399ff;
+    --accent-dim: rgba(0, 102, 204, 0.1);
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-muted: #adb5bd;
+    --border: #dee2e6;
+    --border-light: #e9ecef;
+}
+</style>"""
     elif theme == "blue":
-        theme_css = """
-        :root {
-            --bg-primary: #0a1929;
-            --bg-secondary: #132f4c;
-            --bg-card: #1e3a5f;
-            --bg-hover: #2a4d7a;
-            --accent: #00b4d8;
-            --accent-light: #48cae4;
-            --accent-dim: rgba(0, 180, 216, 0.15);
-            --text-primary: #ffffff;
-            --text-secondary: #90e0ef;
-            --text-muted: #caf0f8;
-            --border: #2a4d7a;
-            --border-light: #1e3a5f;
-        }
-        """
+        theme_css = """<style>
+:root {
+    --bg-primary: #0a1929;
+    --bg-secondary: #132f4c;
+    --bg-card: #1e3a5f;
+    --bg-hover: #2a4d7a;
+    --accent: #00b4d8;
+    --accent-light: #48cae4;
+    --accent-dim: rgba(0, 180, 216, 0.15);
+    --text-primary: #ffffff;
+    --text-secondary: #90e0ef;
+    --text-muted: #caf0f8;
+    --border: #2a4d7a;
+    --border-light: #1e3a5f;
+}
+</style>"""
     
     full_css = GLOBAL_CSS + theme_css
     st.markdown(full_css, unsafe_allow_html=True)

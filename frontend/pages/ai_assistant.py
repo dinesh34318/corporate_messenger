@@ -18,6 +18,8 @@ def show_ai_assistant():
     </div>
     """, unsafe_allow_html=True)
 
+    submitted_query = None
+
     # Suggested queries
     st.markdown("#### 💡 Suggested Questions")
     suggestions = [
@@ -31,7 +33,7 @@ def show_ai_assistant():
     for i, s in enumerate(suggestions):
         with cols[i % 3]:
             if st.button(s, key=f"sug_{i}", use_container_width=True):
-                st.session_state["ai_query"] = s
+                submitted_query = s
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -61,19 +63,11 @@ def show_ai_assistant():
 
     # Query input
     with st.form("ai_form", clear_on_submit=True):
-        if "ai_query" in st.session_state:
-            query = st.text_input(
-                "Ask AI",
-                value=st.session_state.pop("ai_query"),
-                placeholder="e.g. What meetings are scheduled this week?",
-                label_visibility="collapsed"
-            )
-        else:
-            query = st.text_input(
-                "Ask AI",
-                placeholder="e.g. What meetings are scheduled this week?",
-                label_visibility="collapsed"
-            )
+        query = st.text_input(
+            "Ask AI",
+            placeholder="e.g. What meetings are scheduled this week?",
+            label_visibility="collapsed"
+        )
         c1, c2 = st.columns([5, 1])
         with c2:
             submitted = st.form_submit_button("Ask 🚀", use_container_width=True)
@@ -85,18 +79,21 @@ def show_ai_assistant():
         st.rerun()
 
     if submitted and query.strip():
-        st.session_state["ai_history"].append({"role": "user", "content": query.strip()})
+        submitted_query = query.strip()
+
+    if submitted_query:
+        st.session_state["ai_history"].append({"role": "user", "content": submitted_query})
 
         with st.spinner("🔍 Searching chat history and generating answer…"):
             try:
                 from backend.rag_assistant import ask_assistant
                 answer = ask_assistant(
-                    question=query.strip(),
+                    question=submitted_query,
                     user_login=user["login_id"],
                     user_name=user.get("name", "")
                 )
             except Exception as e:
-                answer = f"⚠️ AI assistant error: {str(e)}\n\nMake sure ANTHROPIC_API_KEY is set and the RAG index has been seeded."
+                answer = f"⚠️ AI assistant error: {str(e)}"
 
         st.session_state["ai_history"].append({"role": "assistant", "content": answer})
         st.rerun()
