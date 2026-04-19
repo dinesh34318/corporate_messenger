@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from backend.auth import login_user  # adjust if needed
-
+from auth import login_user ✅  # adjust if needed
+from database import get_db ✅
 app = FastAPI()
 
 @app.get("/")
