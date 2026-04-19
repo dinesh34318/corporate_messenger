@@ -1,0 +1,7 @@
+pymongo[srv]
+python-dotenv
+bcrypt
+sentence-transformers
+chromadb
+python-dateutil
+groq
